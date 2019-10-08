@@ -25,4 +25,6 @@ app.listen(PORT, HOST, () => {
   console.log(`Running on http://${HOST}:${PORT}`)
 })
 
-setInterval(intervalFunc, process.env.SCHEDULE_MINUTES * 60 * 1000)
+intervalFunc().catch(error => console.log(error.meta.body.error))
+
+// setInterval(intervalFunc, process.env.SCHEDULE_MINUTES * 60 * 1000)
