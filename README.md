@@ -32,12 +32,21 @@ Either add them to an `.env` file or pass them to the docker image.
 
 ## Docker
 
-Heartbeat Watcher is available as docker container. Mount the configuration file in order to run the application.
+Heartbeat Watcher is available as docker image. Mount the configuration file in order to run the application.
 
-`docker run -i -p 3000:3000 -v ${PWD}/heartbeatwatcher.yml:/usr/src/app/heartbeatwatcher.yml heartbeat-watcher:latest`
+`docker run -i -p 3000:3000 -v ${PWD}/heartbeatwatcher.yml:/usr/src/app/heartbeatwatcher.yml heartbeat-watcher:1.0.0`
 
 ### Build
 
 Build docker container with the following command.
 
-`docker build -t heartbeat-watcher:latest .`
+`docker build -t heartbeat-watcher:1.0.0 .`
+
+### Publish
+
+Tag the docker image and publish to the target repo.
+
+```bash
+docker tag heartbeat-watcher:1.0.0 HOSTNAME:PORT/heartbeat-watcher:1.0.0
+docker push HOSTNAME:PORT/heartbeat-watcher:1.0.0
+```

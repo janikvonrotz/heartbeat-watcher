@@ -23,10 +23,8 @@ app.get('/', (req, res) => {
 })
 
 // Start express app
-const PORT = SERVER.PORT || 3000
-const HOST = SERVER.HOST || '0.0.0.0'
-app.listen(PORT, HOST, () => {
-  logger.info(`Running server on http://${HOST}:${PORT}`)
+app.listen(SERVER.PORT, SERVER.HOST, () => {
+  logger.info(`Running server on http://${SERVER.HOST}:${SERVER.PORT}`)
 })
 
 // Function that calls watcher
