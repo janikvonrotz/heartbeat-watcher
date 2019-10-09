@@ -1,22 +1,31 @@
 # Hearteat Watcher
 
-The Heartbeat Watcher is a simple server that repeatedly checks the `heartbeat` index of an elasticsearch and reports unavilable sites.
+Heartbeat Watcher is a simple server that repeatedly checks the heartbeat index of an elasticsearch node and reports unavailable sites.
 
-## Environment
+## Config
 
-The following env variables must be configured.
+Heartbeat Watcher load configuration from the `heartbeat-watcher.yml` file.
 
 ```bash
-ELASTICSEARCH_HOST="https://HOSTNAME:9200"
-ELASTICSEARCH_USERNAME="USERNAME"
-ELASTICSEARCH_PASSWORD="PASSWORD"
-SCHEDULE_MINUTES=1
-SMTP_HOST="HOSTNAME"
-SMTP_PORT="PORT"
-SMTP_USERNAME="USERNAME"
-SMTP_PASSWORD="PASSWORD"
-MAIL_FROM="DISPLAYNAME" <NAME@EXAMPLE.COM>
-MAIL_TO=NAME@EXAMPLE.COM
+SERVER:
+  HOST: "0.0.0.0"
+  PORT: 3000
+ELASTICSEARCH:
+  HOST: "https://HOSTNAME:9200"
+  USERNAME: "USERNAME"
+  PASSWORD: "PASSWORD"
+SCHEDULE:
+  MINUTES: 5
+SMTP:
+  HOST: "HOSTNAME"
+  PORT: 587
+  USERNAME: "AME@EXAMPLE.COM"
+  PASSWORD: "PASSWORD"
+MAIL:
+  FROM: "\"DISPLAYNAME" <AME@EXAMPLE.COM>"
+  TO: "AME@EXAMPLE.COM"
+  KIBANA:
+    URL: "https://HOSTNAME/app/uptime"
 ```
 
 Either add them to an `.env` file or pass them to the docker image.
