@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 })
 
 // Start express app
-const PORT = SERVER.PORT || 8080
+const PORT = SERVER.PORT || 3000
 const HOST = SERVER.HOST || '0.0.0.0'
 app.listen(PORT, HOST, () => {
   logger.info(`Running server on http://${HOST}:${PORT}`)

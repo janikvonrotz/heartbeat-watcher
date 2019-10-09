@@ -4,7 +4,7 @@ Heartbeat Watcher is a simple server that repeatedly checks the heartbeat index 
 
 ## Config
 
-Heartbeat Watcher load configuration from the `heartbeat-watcher.yml` file.
+Heartbeat Watcher load configuration from the `heartbeatwatcher.yml` file.
 
 ```bash
 SERVER:
@@ -29,3 +29,15 @@ MAIL:
 ```
 
 Either add them to an `.env` file or pass them to the docker image.
+
+# Docker
+
+Heartbeat Watcher is available as docker container. Mount the configuration file in order to run the application.
+
+`docker run -i -p 3000:3000 -v ${PWD}/heartbeatwatcher.yml:/usr/src/app/heartbeatwatcher.yml heartbeat-watcher:latest`
+
+# Build
+
+Build docker container with the following command.
+
+`docker build -t heartbeat-watcher:latest .`

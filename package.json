@@ -1,12 +1,12 @@
 {
   "name": "heartbeat-watcher",
   "version": "1.0.0",
-  "description": "",
+  "description": "Heartbeat Watcher is a simple server that repeatedly checks the heartbeat index of an elasticsearch node and reports unavailable sites.",
   "main": "index.js",
+  "repository": "https://github.com/Abilium-GmbH/heartbeat-watcher",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js",
-    "build": "docker build -t <your username>/node-web-app ."
+    "dev": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
