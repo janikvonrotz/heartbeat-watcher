@@ -4,7 +4,7 @@ Heartbeat Watcher is a simple server that repeatedly checks the heartbeat index 
 
 ## Config
 
-Heartbeat Watcher load configuration from the `heartbeatwatcher.yml` file.
+Heartbeat Watcher loads configuration from the `heartbeatwatcher.yml` file.
 
 ```bash
 SERVER:
@@ -27,8 +27,6 @@ MAIL:
   KIBANA:
     URL: "https://HOSTNAME/app/uptime"
 ```
-
-Either add them to an `.env` file or pass them to the docker image.
 
 ## Docker
 
