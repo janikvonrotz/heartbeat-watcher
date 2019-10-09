@@ -34,6 +34,10 @@ async function watcher ({ lastCheckDate, results, sitesDownDetected, status }) {
 
     // Send alerts for sites down
     if (siteAlerts[0]) {
+
+      // Get rid of duplicates
+      siteAlerts = siteAlerts.filter((value, index) => siteAlerts.indexOf(value) === index)
+
       const html = `
       <p>The following sites are down:</p>
       <ul>
@@ -44,7 +48,7 @@ async function watcher ({ lastCheckDate, results, sitesDownDetected, status }) {
       <p>See the <a href="${MAIL.KIBANA.URL}">Kibana Uptime dashboard</a> for details.</p>
       `
       sendMail('Sites Down!', html)
-      status = 'Sent mail alerts.'
+      status = 'Dispatched mail alert.'
       logger.info(status)
 
       // Add alerts to detected sites array
@@ -74,7 +78,7 @@ async function watcher ({ lastCheckDate, results, sitesDownDetected, status }) {
       </ul>
       `
       sendMail('Sites Recovered!', html)
-      status = 'Sent email recover notice.'
+      status = 'Dispatched email recover notice.'
       logger.info(status)
 
       // Clear array
