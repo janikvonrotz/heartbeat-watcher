@@ -41,9 +41,3 @@ Heartbeat Watcher is available as docker container. Mount the configuration file
 Build docker container with the following command.
 
 `docker build -t heartbeat-watcher:latest .`
-
-### Publish
-
-To publish the docker image to the GitHub registry run this command.
-
-`docker build -t docker.pkg.github.com/abilium-gmbh/monitoring/heartbeat-watcher:1.0.0 .
