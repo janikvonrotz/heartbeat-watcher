@@ -1,27 +1,25 @@
 const nodemailer = require('nodemailer')
+const { SMTP, MAIL } = require('./config')
+const logger = require('./logger')
 
-const main = async () => {
-  const testAccount = await nodemailer.createTestAccount()
-
+async function sendMail (subject, html, config) {
   const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
+    host: SMTP.HOST,
+    port: SMTP.PORT,
     secure: false,
     auth: {
-      user: testAccount.user,
-      pass: testAccount.pass
+      user: SMTP.USERNAME,
+      pass: SMTP.PASSWORD
     }
   })
   const info = await transporter.sendMail({
-    from: process.env.MAIL_FROM,
-    to: process.env.MAIL_TO,
-    subject: 'Site Down',
-    text: 'There are sites down!',
-    html: '<b>There are sites down!</b>'
+    from: MAIL.FROM,
+    to: MAIL.TO,
+    subject: subject,
+    html: html
   })
 
-  console.log('Message sent: %s', info.messageId)
-  console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+  logger.info(`Message sent: ${info.messageId}`)
 }
 
-module.exports = main
+module.exports = sendMail

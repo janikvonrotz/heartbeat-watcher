@@ -1,16 +1,17 @@
 const { Client } = require('@elastic/elasticsearch')
+const { SCHEDULE, ELASTICSEARCH } = require('./config')
 
 // Create elasticsearch client
 const client = new Client({
-  node: process.env.ELASTICSEARCH_HOST,
+  node: ELASTICSEARCH.HOST,
   auth: {
-    username: process.env.ELASTICSEARCH_USERNAME,
-    password: process.env.ELASTICSEARCH_PASSWORD
+    username: ELASTICSEARCH.USERNAME,
+    password: ELASTICSEARCH.PASSWORD
   }
 })
 
-async function run () {
-  // Search for sites with summary down
+async function query () {
+  // Search sites with summary down
   const { body } = await client.search({
     index: 'heartbeat*',
     body: {
@@ -20,7 +21,7 @@ async function run () {
           must: [
             {
               match: {
-                'summary.down': 0
+                'summary.down': 1
               }
             }
           ],
@@ -28,7 +29,7 @@ async function run () {
             {
               range: {
                 '@timestamp': {
-                  gte: `now-${process.env.SCHEDULE_MINUTES}m`
+                  gte: `now-${SCHEDULE.MINUTES}m`
                 }
               }
             }
@@ -38,7 +39,9 @@ async function run () {
     }
   })
 
+  // console.log('QUERY', body.hits.hits)
+
   return body.hits.hits
 }
 
-module.exports = run
+module.exports = query

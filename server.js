@@ -1,30 +1,43 @@
-require('dotenv').config()
+
 const express = require('express')
-const query = require('./query')
+const { SERVER, SCHEDULE } = require('./config')
+const watcher = require('./watcher')
+const logger = require('./logger')
 
-const PORT = process.env.PORT || 8080
-const HOST = process.env.HOST || '0.0.0.0'
-
-var date = new Date()
-var results
-
-async function intervalFunc () {
-  results = await query()
-  date = new Date()
+// Track state of watcher
+var state = {
+  lastCheckDate: new Date(),
+  results: null,
+  sitesDownDetected: [],
+  status: 'starting'
 }
 
+// Create express app that shows watcher state
 const app = express()
 app.get('/', (req, res) => {
   res.json({
-    last_check: date.toISOString(),
-    results: results
+    last_check: state.lastCheckDate,
+    sites_down: state.sitesDownDetected,
+    status: state.status
   })
 })
 
+// Start express app
+const PORT = SERVER.PORT || 8080
+const HOST = SERVER.HOST || '0.0.0.0'
 app.listen(PORT, HOST, () => {
-  console.log(`Running on http://${HOST}:${PORT}`)
+  logger.info(`Running server on http://${HOST}:${PORT}`)
 })
 
-intervalFunc().catch(error => console.log(error.meta.body.error))
+// Function that calls watcher
+async function intervalFunc () {
+  logger.info('Run watcher')
+  state = await watcher(state)
+}
 
-// setInterval(intervalFunc, process.env.SCHEDULE_MINUTES * 60 * 1000)
+// Run watcher for the first time
+intervalFunc().catch(logger.error)
+
+// Start watcher scheduling
+logger.info(`Start watcher and run every ${SCHEDULE.MINUTES} minutes.`)
+setInterval(intervalFunc, SCHEDULE.MINUTES * 60 * 1000)

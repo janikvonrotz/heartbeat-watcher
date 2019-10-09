@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "build": "docker build -t <your username>/node-web-app ."
   },
   "author": "",
@@ -14,7 +14,9 @@
     "@elastic/elasticsearch": "^7.4.0",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
-    "nodemailer": "^6.3.0"
+    "js-yaml": "^3.13.1",
+    "nodemailer": "^6.3.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "standard": "^14.3.1"
