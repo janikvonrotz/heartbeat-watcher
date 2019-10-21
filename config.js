@@ -1,15 +1,33 @@
 const yaml = require('js-yaml')
 const fs = require('fs')
-// const dotenv = require('dotenv')
+const assign = require('./assign')
+require('dotenv').config()
 
-// Parse env file
+var configEnv = {}
 
-// const result = dotenv.config()
-// if (result.error) {
-//   throw result.error
-// }
-// const { parsed: configEnv } = result
-// console.log(configEnv)
+// supported env variables
+const envVars = `
+SERVER_HOST
+SERVER_PORT
+ELASTICSEARCH_HOST
+ELASTICSEARCH_USERNAME
+ELASTICSEARCH_PASSWORD
+SCHEDULE_MINUTES
+SMTP_HOST
+SMTP_PORT
+SMTP_USERNAME
+SMTP_PASSWORD
+MAIL_FROM
+MAIL_TO
+MAIL_KIBANA_URL
+`.split('\n')
+
+// Parse env variables
+envVars.forEach((entry) => {
+  if (process.env[entry]) {
+    assign(configEnv, entry.split('_'), process.env[entry])
+  }
+})
 
 // Parse yml file
 var configYml = {}
@@ -19,4 +37,6 @@ try {
   console.log(error)
 }
 
-module.exports = configYml
+const config = { ...configYml, ...configEnv }
+
+module.exports = config
